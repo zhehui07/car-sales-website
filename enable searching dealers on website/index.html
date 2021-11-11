@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Map</title>
+		<script type="text/javascript" src="./js/jquery.min.js"></script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+		<style type="text/css">
+			#map {
+				height: 100%;
+			}
+
+			html,
+			body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			.btns-box {
+				position: absolute;
+				top: 62px;
+				left: 16px;
+				z-index: 99;
+				background-color: white;
+			}
+
+			.btn-item {
+				height: 25px;
+				width: 25px;
+				padding: 5px;
+				text-align: center;
+				line-height: 25px;
+				font-size: 20px;
+				border-bottom: 1px solid #e9e9e9;
+				cursor: pointer;
+			}
+
+			.active {
+				color: royalblue;
+			}
+
+
+
+			.title {
+				font-weight: bold;
+				margin-top: 10px;
+
+			}
+
+			#infowindow-content {
+				display: none;
+			}
+
+			#map #infowindow-content {
+				display: inline;
+			}
+		</style>
+		<script>
+			let map;
+			let bMarkers = []
+			/**
+			 * 初始化地图
+			 * */
+			function initMap() {
+				map = new google.maps.Map(document.getElementById("map"), {
+					center: {
+						lat: 39.45980209,
+						lng: -98.09030737
+					},
+					zoom: 5,
+				});
+				addMarker()
+
+			}
+
+
+			var infoWindow
+			let markers = [{
+					position: {
+						lat: 40.02467428,
+						lng: -98.070013
+					},
+					DealerId: 1,
+					Dealer_Name: "Alexander Motors Inc.",
+					Dealer_Address: "302 North Commercial Street",
+					PhoneNumber: "303-765-1492",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "68978",
+					City: "Superior",
+					Country: "USA"
+				},
+				{
+					position: {
+						lat: 39.48076813,
+						lng: -98.11486389
+					},
+					DealerId: 2,
+					Dealer_Name: "Becker Autos & Trailers",
+					Dealer_Address: "3008 US Highway 24",
+					PhoneNumber: "785-831-4160",
+					State_Code: "KA",
+					State: "Kansas",
+					Zipcode: "67420",
+					City: "Beloit",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 39.45980209,
+						lng: -98.09030737
+					},
+					DealerId: 3,
+					Dealer_Name: "Beloit Auto and Truck Plaza Ford",
+					Dealer_Address: "3133 US HIGHWAY 24",
+					PhoneNumber: "785-738-3573",
+					State_Code: "KA",
+					State: "Kansas",
+					Zipcode: "67420",
+					City: "Beloit",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 40.10596555,
+						lng: -99.36754575
+					},
+					DealerId: 4,
+					Dealer_Name: "Tripe Motor Company",
+					Dealer_Address: "814 Hwy 183 Alma ",
+					PhoneNumber: "308-920-5030",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "68920",
+					City: "Alma",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 40.6150915,
+						lng: -98.38141609
+					},
+					DealerId: 5,
+					Dealer_Name: "Paul Spady Motor",
+					Dealer_Address: "2850 Osborne Drive Eas",
+					PhoneNumber: "402-519-4936",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "68901",
+					City: "Hastings",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 40.62105794,
+						lng: -98.6588015
+					},
+					DealerId: 6,
+					Dealer_Name: "Kenesaw Motor Company",
+					Dealer_Address: "119 W Maple St",
+					PhoneNumber: "402-752-0040",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "681006",
+					City: "Kenesaw",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 40.6132404,
+						lng: -98.38042236
+					},
+					DealerId: 7,
+					Dealer_Name: "Jerry Spady Chevrolet GMC Cadillac",
+					Dealer_Address: "2750 Osborne Dr E",
+					PhoneNumber: "402-436-4000",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "68901",
+					City: "Hastings",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 39.23738419,
+						lng: -99.29867315
+					},
+					DealerId: 8,
+					Dealer_Name: "JJ Auto Sales",
+					Dealer_Address: "309 N WAshington St",
+					PhoneNumber: "785-203-8002",
+					State_Code: "KA",
+					State: "Kansas",
+					Zipcode: "67663",
+					City: "Plainville",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 40.16699878,
+						lng: -97.59125685
+					},
+					DealerId: 9,
+					Dealer_Name: "Kass Ford Sales",
+					Dealer_Address: "322 Lincoln Ave.",
+					PhoneNumber: "402-768-6064",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "68370",
+					City: "Hebron",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 40.43324716,
+						lng: -99.310085581
+					},
+					DealerId: 10,
+					Dealer_Name: "Lee Jansseen Motor",
+					Dealer_Address: "1221 US-6",
+					PhoneNumber: "877-671-9158",
+					State_Code: "NE",
+					State: "Nebraska",
+					Zipcode: "68949",
+					City: "Holdrege",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.38211138,
+						lng: -122.29721
+					},
+					DealerId: 11,
+					Dealer_Name: "Pacific Fleet Sales",
+					Dealer_Address: "24432 Pacific Hwy S",
+					PhoneNumber: "253-258-0991",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98032",
+					City: "Kent",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.29340945,
+						lng: -122.2106116
+					},
+					DealerId: 12,
+					Dealer_Name: "Broadwalk Motors",
+					Dealer_Address: "1344 17th ST SE",
+					PhoneNumber: "253-289-5084",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98002",
+					City: "Auburn",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.3839776,
+						lng: -122.2979174
+					},
+					DealerId: 13,
+					Dealer_Name: "Rainier Truck and Trailer",
+					Dealer_Address: "24225 Pacific Highway South",
+					PhoneNumber: "253-642-0566",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98198",
+					City: "Des Moines",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.19650519,
+						lng: -122.2120255
+					},
+					DealerId: 14,
+					Dealer_Name: "Rairdon's Honda of Sumner",
+					Dealer_Address: "16302 Auto Ln",
+					PhoneNumber: "253-321-5313",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98390",
+					City: "Sumner",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.19696237,
+						lng: -122.2100533
+					},
+					DealerId: 15,
+					Dealer_Name: "Sunset Ford of Sumner",
+					Dealer_Address: "6616 166th Ave E",
+					PhoneNumber: "253-863-2211",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98390",
+					City: "Sumner",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.34712261,
+						lng: -122.222286
+					},
+					DealerId: 16,
+					Dealer_Name: "Supreme Motors",
+					Dealer_Address: "4418 Auburn Way N",
+					PhoneNumber: "253-236-9125",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98002",
+					City: "Auburn",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.47273342,
+						lng: -122.3333882
+					},
+					DealerId: 17,
+					Dealer_Name: "Hertz Car Sales Seattle",
+					Dealer_Address: "14500 1ST Ave S",
+					PhoneNumber: "206-701-7411",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98168",
+					City: "Burien",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.47107663,
+						lng: -122.3334175
+					},
+					DealerId: 18,
+					Dealer_Name: "Legend Auto Sales Inc",
+					Dealer_Address: "14650 1st Ave South",
+					PhoneNumber: "206-686-8266",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98168",
+					City: "Burien",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.391006189,
+						lng: -122.2973561
+					},
+					DealerId: 19,
+					Dealer_Name: "ALL Pro Auto Sales, LLC",
+					Dealer_Address: "22441 Pacific Hwy S",
+					PhoneNumber: "253-487-7227",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98198",
+					City: "Des Moines",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.40496075,
+						lng: -122.2972415
+					},
+					DealerId: 20,
+					Dealer_Name: "Emerald Valley Auto Sales",
+					Dealer_Address: "22002 Pacific Hwy S",
+					PhoneNumber: "206-824-4457",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98198",
+					City: "Des Moines",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 47.39976199,
+						lng: -122.3231171
+					},
+					DealerId: 21,
+					Dealer_Name: "Sunrise Automobile Corporation",
+					Dealer_Address: "22727 Marine View Dr S",
+					PhoneNumber: "206-824-2200",
+					State_Code: "WA",
+					State: "Washington",
+					Zipcode: "98198",
+					City: "Des Moines",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 42.31963668,
+						lng: -72.62317798
+					},
+					DealerId: 22,
+					Dealer_Name: "Northampton Auto Sales",
+					Dealer_Address: "50 Market St",
+					PhoneNumber: "413-584-850",
+					State_Code: "MA",
+					State: "Massachusetts",
+					Zipcode: "1060",
+					City: "Northampton",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 42.1692493,
+						lng: -72.54630328
+					},
+					DealerId: 23,
+					Dealer_Name: "Mercedes-Benz Of Springfield",
+					Dealer_Address: "2100 Burnett Rd",
+					PhoneNumber: "413-624-4100",
+					State_Code: "MA",
+					State: "Massachusetts",
+					Zipcode: "1020",
+					City: "Chicopee",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 42.62168068,
+						lng: -72.61331139
+					},
+					DealerId: 24,
+					Dealer_Name: "Ford of Greenfield",
+					Dealer_Address: "1 Main St",
+					PhoneNumber: "413-773-5455",
+					State_Code: "MA",
+					State: "Massachusetts",
+					Zipcode: "1301",
+					City: "Greefield",
+					Country: "USA"
+				}, {
+					position: {
+						lat: 42.43811366,
+						lng: -72.6084443
+					},
+					DealerId: 25,
+					Dealer_Name: "Pleasant Journey Used Cars",
+					Dealer_Address: "459 Pleasant St",
+					PhoneNumber: "413-586-8150",
+					State_Code: "MA",
+					State: "Massachusetts",
+					Zipcode: "1060",
+					City: "Northampton",
+					Country: "USA"
+				}
+			]
+
+			function addMarker() {
+
+				const infowindow = new google.maps.InfoWindow();
+				for (let i = 0; i < markers.length; i++) {
+					let marker = new google.maps.Marker({
+						position: markers[i].position,
+						map,
+						id: "1111"
+					});
+
+					// {
+					let content = "<div class='title' style='font-size: 18px;'>" + markers[i].Dealer_Name + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>DealerId :</lable> " + markers[
+							i].DealerId + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>Dealer_Name :</lable>  " +
+						markers[i].Dealer_Name + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>Dealer_Address :</lable>  " +
+						markers[i].Dealer_Address + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>PhoneNumber :</lable> " +
+						markers[i].PhoneNumber + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>State_Code :</lable>  " +
+						markers[i].State_Code + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>State :</lable> " + markers[i]
+						.State + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>Zipcode :</lable>  " + markers[
+							i].Zipcode + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>City :</lable> " + markers[i]
+						.City + "</div>" +
+						"<div class='title'><lable style='width:100px;    display: inline-block;'>Country :</lable>  " + markers[
+							i].Country + "</div>"
+					// }
+					infowindow.setContent(content)
+					marker.addListener("click", (res) => {
+						infowindow.close()
+						infowindow.open(marker.get("map"), marker);
+					});
+					bMarkers.push(marker)
+				}
+			}
+
+			function claerBMarkers() {
+				bMarkers.map(function(item) {
+					item.setMap(null)
+				})
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="map"></div>
+		<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFAy01-C4WeccXebdquuaRouLMUmYawRE&callback&callback=initMap&libraries=places,drawing&v=weekly"
+			async></script>
+	</body>
+
+</html>

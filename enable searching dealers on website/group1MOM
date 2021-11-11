@@ -1,0 +1,61 @@
+Project Description: 
+
+Create an Automotive Dealer Website system where customers can find different  automotive dealers in their region 
+and search/browse for the cars they are looking for. Customers can also express interest to a dealer on the car they 
+are interested in through a lead form. Automotive Dealers should be able to manage their Inventory (ability to 
+add/delete/modify their vehicles on their lot). Automotive Dealers can also create Incentives on certain types of 
+vehicles to create a demand for vehicles.
+
+Use case 1: Customers (aka as Car Shoppers) should be able to find the dealers in their proximity and select the 
+dealer they are interested in interacting with.
+
+Link for some ideas to implement this use case  
+
+Team - Yun Xu, Chang Li, Lakshmi Sreenilayam Santhoshkumar, Tejaswi Nemani
+
+----------------------------------------------------------------------------------------------------------------
+04/08/2021 - Initial Call
+Agenda
+00- Understand the scope of  and decide on the features to start with.
+01- Understand the nature of the data needed for the project
+02- Discuss on the wireframe
+
+MOM
+- Decided on the features to be considered and to be included in the wireframe
+- Decided on the nature of the data needed and data collection is in progress which is to be shared with Team 8
+- Tasks are assigned for each of the team members to be worked on before the next meeting:
+Lakshmi - Create this document and keep track of the progress and mark blockers if any after each meetings
+Tejaswi - Work on the wireframe
+Yun - Collect addresses for 2 Chevrolet dealers each for Washington, Oregon, California, Arizona, Texas
+
+----------------------------------------------------------------------------------------------------------------
+
+04/09/2021
+Agenda 
+00- Create milestones for class on Tuesday and Thursday
+01- Schedule meeting with yash 4:30pm on Monday
+02- Schedule a meeting with Team 8 to discuss on data
+03- Discuss on the wireframe 
+04- Divide the tasks among the members
+05- Understand the scope of the map - {park for now}
+
+
+----------------------------------------------------------------------------------------------------------------
+04/10/2021
+Agenda
+01- Group Meeting with Team 8
+02- Discussing the data structure (size)
+03- Applying the data atributes to Team 8
+04- Asking Professor for searching method
+
+Yun- Dividing tasks & making sure that data from team 8 had includes Dealer names, street address, state, zipcode, sales tel, service tel.
+  i. DealerSearch class - fetching data + search logic/algorithm: Lakshmi;
+  ii. MainGUI class - GUI and user interaction design: Tejaswi + Yun;
+  iii. Map class - implementing map and calling google maps API: Chang; 
+
+Chang- Arranging the meeting & questions for the data preparing and explaining our case and purpose.
+Lakshmi- Engaging the meeting & questions for dealer address depending on cities, states or zipcode & sending the data attributes to Team 8 (Jasmine).
+
+
+
+
